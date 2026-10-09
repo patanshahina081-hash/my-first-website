@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,4 +15,278 @@
     <p>This is my first website, built using HTML.</p>
 
 </body>
-</html>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Freshers Day 2026</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #241044, #7338a0, #e5a9ce);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 30px 20px 90px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 480px;
+            padding: 35px 25px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 27px;
+        }
+
+        p {
+            line-height: 1.7;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 13px 24px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 25px;
+            background: #ffd166;
+            color: #241044;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        .food-option {
+            display: block;
+            text-align: left;
+            padding: 17px;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .food-option input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .bottom-next {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            margin: 0;
+        }
+
+        .message {
+            color: #ffe3e3;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PAGE 1: WELCOME -->
+
+    <section id="welcome" class="page active">
+        <div class="card">
+            <h1>🎉 FRESHERS DAY 2026 🎉</h1>
+
+            <h2>Welcome, Freshers!</h2>
+
+            <p>
+                A new beginning, new friendships,
+                and unforgettable memories!
+            </p>
+
+            <p>📅 October 2026</p>
+
+            <p>Let's make this day special!</p>
+
+            <button onclick="showPage('registration')">
+                Get Started →
+            </button>
+        </div>
+    </section>
+
+
+    <!-- PAGE 2: REGISTRATION NUMBER -->
+
+    <section id="registration" class="page">
+        <div class="card">
+            <h1>🎓 Student Registration</h1>
+
+            <p>Enter your college registration number.</p>
+
+            <input
+                type="text"
+                id="regNumber"
+                placeholder="Example: 25-80-05-0-0-1"
+                autocomplete="off"
+            >
+
+            <p id="regError" class="message"></p>
+
+            <button onclick="goToFood()">
+                Next →
+            </button>
+        </div>
+
+        <button class="bottom-next"
+                onclick="goToFood()">
+            Next →
+        </button>
+    </section>
+
+
+    <!-- PAGE 3: FOOD PREFERENCE -->
+
+    <section id="food" class="page">
+        <div class="card">
+            <h1>🍽️ Food Preference</h1>
+
+            <p>Please select your preferred food.</p>
+
+            <label class="food-option">
+                <input
+                    type="radio"
+                    name="food"
+                    value="Vegetarian"
+                >
+                🥗 Vegetarian
+            </label>
+
+            <label class="food-option">
+                <input
+                    type="radio"
+                    name="food"
+                    value="Non-Vegetarian"
+                >
+                🍗 Non-Vegetarian
+            </label>
+
+            <p id="foodError" class="message"></p>
+
+            <button onclick="submitRegistration()">
+                Submit ✓
+            </button>
+        </div>
+    </section>
+
+
+    <!-- PAGE 4: CONFIRMATION -->
+
+    <section id="confirmation" class="page">
+        <div class="card">
+            <h1>🎉 Registration Successful!</h1>
+
+            <p>Your Freshers Day registration is complete.</p>
+
+            <p id="finalReg"></p>
+
+            <p id="finalFood"></p>
+
+            <p>We look forward to celebrating with you!</p>
+
+            <button onclick="location.reload()">
+                Back to Home
+            </button>
+        </div>
+    </section>
+
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active");
+            });
+
+            document.getElementById(pageId).classList.add("active");
+        }
+
+        function goToFood() {
+            const regNumber = document
+                .getElementById("regNumber")
+                .value.trim();
+
+            const regError = document.getElementById("regError");
+
+            if (regNumber === "") {
+                regError.textContent =
+                    "Please enter your registration number.";
+                return;
+            }
+
+            regError.textContent = "";
+            showPage("food");
+        }
+
+        function submitRegistration() {
+            const regNumber = document
+                .getElementById("regNumber")
+                .value.trim();
+
+            const selectedFood = document.querySelector(
+                'input[name="food"]:checked'
+            );
+
+            const foodError = document.getElementById("foodError");
+
+            if (!selectedFood) {
+                foodError.textContent =
+                    "Please select a food preference.";
